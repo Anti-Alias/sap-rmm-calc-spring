@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SAPRMMRepository extends JpaRepository<SAPRMM, Long> {
-    public List<SAPRMM> findAll();
+    List<SAPRMM> findAll();
 }

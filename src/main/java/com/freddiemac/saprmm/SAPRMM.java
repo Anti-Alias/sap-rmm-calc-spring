@@ -1,20 +1,32 @@
 package com.freddiemac.saprmm;
 
+import org.hibernate.annotations.Columns;
+
+import java.time.Instant;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 
 /**
  * SAPRMM POJO.
  */
 @Entity(name = "saprmm")
 class SAPRMM {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @OneToOne(mappedBy = "saprmm")
+    private SubData subData;
+
     private double poolPercent;
     private double fmParticipationPercent;
     private double upbInvestorPriorAmount;
@@ -163,6 +175,7 @@ class SAPRMM {
     @Override
     public int hashCode() {
         return Objects.hash(
+            id,
             poolPercent,
             fmParticipationPercent,
             upbInvestorPriorAmount,
@@ -180,5 +193,92 @@ class SAPRMM {
             upbAdjustmentAmountCurrent,
             loanStatus
         );
+    }
+
+    /**
+     * Represents the "sub-data" of a {@link SAPRMM} instance.
+     * This data is
+     */
+    @Entity(name = "saprmm_sub_data")
+    static class SubData {
+
+        @Id
+        @Column(name = "saprmm_id")
+        private Long id;
+
+        @OneToOne
+        @MapsId
+        @JoinColumn(name = "saprmm_id")
+        private SAPRMM saprmm;
+
+        private double upb;
+        private String rmm;
+        private String loanStatus;
+        private double upbCurrentAmount;
+        private Instant maturityDate;
+        private double poolTerm;
+
+        public SubData() {}
+
+        public SubData(SAPRMM saprmm, double upb, String rmm, String loanStatus, double upbCurrentAmount, Instant maturityDate, double poolTerm) {
+            this.saprmm = saprmm;
+            this.upb = upb;
+            this.rmm = rmm;
+            this.loanStatus = loanStatus;
+            this.upbCurrentAmount = upbCurrentAmount;
+            this.maturityDate = maturityDate;
+            this.poolTerm = poolTerm;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public SAPRMM getSaprmm() {
+            return saprmm;
+        }
+
+        public double getUpb() {
+            return upb;
+        }
+
+        public String getRmm() {
+            return rmm;
+        }
+
+        public String getLoanStatus() {
+            return loanStatus;
+        }
+
+        public double getUpbCurrentAmount() {
+            return upbCurrentAmount;
+        }
+
+        public Instant getMaturityDate() {
+            return maturityDate;
+        }
+
+        public double getPoolTerm() {
+            return poolTerm;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            SubData subData = (SubData) o;
+            return Double.compare(subData.upb, upb) == 0 &&
+                Double.compare(subData.upbCurrentAmount, upbCurrentAmount) == 0 &&
+                Double.compare(subData.poolTerm, poolTerm) == 0 &&
+                Objects.equals(id, subData.id) &&
+                Objects.equals(rmm, subData.rmm) &&
+                Objects.equals(loanStatus, subData.loanStatus) &&
+                Objects.equals(maturityDate, subData.maturityDate);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id, upb, rmm, loanStatus, upbCurrentAmount, maturityDate, poolTerm);
+        }
     }
 }
