@@ -1,0 +1,3 @@
+CREATE TABLE "saprmm" (
+    ID SERIAL NOT NULL
+)
