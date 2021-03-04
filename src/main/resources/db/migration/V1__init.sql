@@ -10,6 +10,7 @@ CREATE TABLE "saprmm" (
     pool_term DOUBLE PRECISION NOT NULL,
     product_code TEXT NOT NULL,
     maturity_date TIMESTAMPTZ NOT NULL,
+    note_maturity_date TIMESTAMPTZ NOT NULL,
     principal_amortization_code TEXT NOT NULL,
     ddlpi TEXT NOT NULL,
     active_inactive_edit_code TEXT NOT NULL,
