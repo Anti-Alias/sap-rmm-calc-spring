@@ -18,6 +18,6 @@ public class SAPRMMExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = { SAPRMMException.class })
     protected ResponseEntity<Object> handleConflict(SAPRMMException ex, WebRequest request) {
         logger.error(ex.getMessage(), ex);
-        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 }
