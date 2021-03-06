@@ -1,31 +1,25 @@
 package com.freddiemac.saprmm;
 
-import org.hibernate.annotations.Columns;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.Instant;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 /**
- * SAPRMM POJO.
+ * SAPRMM entity.
  */
 @Entity(name = "saprmm")
 class SAPRMM {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne(mappedBy = "saprmm")
-    private SubData subData;
 
     private double poolPercent;
     private double fmParticipationPercent;
@@ -34,19 +28,16 @@ class SAPRMM {
     private double upbCurrentAmount;
     private double piPaymentAmount;
     private double noteRate;
-    private double poolTerm;
-    private double productCode;
-    private double maturityDate;
-    private double noteMaturityDate;
-    private double principalAmortizationCode;
-    private double ddlpi;
-    private double activeInactiveEditCode;
+    private int poolTerm;
+    private String productCode;
+    private Instant maturityDate;
+    private Instant noteMaturityDate;
+    private String principalAmortizationCode;
+    private String ddlpi;
+    private String activeInactiveEditCode;
     private double upbAdjustmentAmountCurrent;
-    private double loanStatus;
+    private String loanStatus;
 
-    /**
-     * Default constructor.
-     */
     public SAPRMM() {}
 
     public SAPRMM(
@@ -57,15 +48,15 @@ class SAPRMM {
         double upbCurrentAmount,
         double piPaymentAmount,
         double noteRate,
-        double poolTerm,
-        double productCode,
-        double maturityDate,
-        double noteMaturityDate,
-        double principalAmortizationCode,
-        double ddlpi,
-        double activeInactiveEditCode,
+        int poolTerm,
+        String productCode,
+        Instant maturityDate,
+        Instant noteMaturityDate,
+        String principalAmortizationCode,
+        String ddlpi,
+        String activeInactiveEditCode,
         double upbAdjustmentAmountCurrent,
-        double loanStatus
+        String loanStatus
     ) {
         this.poolPercent = poolPercent;
         this.fmParticipationPercent = fmParticipationPercent;
@@ -85,68 +76,49 @@ class SAPRMM {
         this.loanStatus = loanStatus;
     }
 
-    public double getPoolPercent() {
-        return poolPercent;
-    }
+    public Long getId() { return id; }
 
-    public double getFmParticipationPercent() {
-        return fmParticipationPercent;
-    }
+    public double getPoolPercent() { return poolPercent; }
 
-    public double getUpbInvestorPriorAmount() {
-        return upbInvestorPriorAmount;
-    }
+    public double getFmParticipationPercent() { return fmParticipationPercent; }
 
-    public double getMortgageUpbPriorAmount() {
-        return mortgageUpbPriorAmount;
-    }
+    public double getUpbInvestorPriorAmount() { return upbInvestorPriorAmount; }
 
-    public double getUpbCurrentAmount() {
-        return upbCurrentAmount;
-    }
+    public double getMortgageUpbPriorAmount() { return mortgageUpbPriorAmount; }
 
-    public double getPiPaymentAmount() {
-        return piPaymentAmount;
-    }
+    public double getUpbCurrentAmount() { return upbCurrentAmount; }
 
-    public double getNoteRate() {
-        return noteRate;
-    }
+    public double getPiPaymentAmount() { return piPaymentAmount; }
 
-    public double getPoolTerm() {
-        return poolTerm;
-    }
+    public double getNoteRate() { return noteRate; }
 
-    public double getProductCode() {
-        return productCode;
-    }
+    public int getPoolTerm() { return poolTerm; }
 
-    public double getMaturityDate() {
-        return maturityDate;
-    }
+    public String getProductCode() { return productCode; }
 
-    public double getNoteMaturityDate() {
-        return noteMaturityDate;
-    }
+    public Instant getMaturityDate() { return maturityDate; }
 
-    public double getPrincipalAmortizationCode() {
-        return principalAmortizationCode;
-    }
+    public Instant getNoteMaturityDate() { return noteMaturityDate; }
 
-    public double getDdlpi() {
-        return ddlpi;
-    }
+    public String getPrincipalAmortizationCode() { return principalAmortizationCode; }
 
-    public double getActiveInactiveEditCode() {
-        return activeInactiveEditCode;
-    }
+    public String getDdlpi() { return ddlpi; }
 
-    public double getUpbAdjustmentAmountCurrent() {
-        return upbAdjustmentAmountCurrent;
-    }
+    public String getActiveInactiveEditCode() { return activeInactiveEditCode; }
 
-    public double getLoanStatus() {
-        return loanStatus;
+    public double getUpbAdjustmentAmountCurrent() { return upbAdjustmentAmountCurrent; }
+
+    public String getLoanStatus() { return loanStatus; }
+
+    /**
+     * Updates specific parameters.
+     * @param params Parameters to update.
+     */
+    public void update(UpdateParams params) {
+        upbCurrentAmount = params.getUpbCurrentAmount();
+        loanStatus = params.getLoanStatus();
+        maturityDate = params.getMaturityDate();
+        poolTerm = params.getPoolTerm();
     }
 
     @Override
@@ -162,14 +134,15 @@ class SAPRMM {
             Double.compare(saprmm.piPaymentAmount, piPaymentAmount) == 0 &&
             Double.compare(saprmm.noteRate, noteRate) == 0 &&
             Double.compare(saprmm.poolTerm, poolTerm) == 0 &&
-            Double.compare(saprmm.productCode, productCode) == 0 &&
-            Double.compare(saprmm.maturityDate, maturityDate) == 0 &&
-            Double.compare(saprmm.noteMaturityDate, noteMaturityDate) == 0 &&
-            Double.compare(saprmm.principalAmortizationCode, principalAmortizationCode) == 0 &&
-            Double.compare(saprmm.ddlpi, ddlpi) == 0 &&
-            Double.compare(saprmm.activeInactiveEditCode, activeInactiveEditCode) == 0 &&
             Double.compare(saprmm.upbAdjustmentAmountCurrent, upbAdjustmentAmountCurrent) == 0 &&
-            Double.compare(saprmm.loanStatus, loanStatus) == 0;
+            Objects.equals(id, saprmm.id) &&
+            Objects.equals(productCode, saprmm.productCode) &&
+            Objects.equals(maturityDate, saprmm.maturityDate) &&
+            Objects.equals(noteMaturityDate, saprmm.noteMaturityDate) &&
+            Objects.equals(principalAmortizationCode, saprmm.principalAmortizationCode) &&
+            Objects.equals(ddlpi, saprmm.ddlpi) &&
+            Objects.equals(activeInactiveEditCode, saprmm.activeInactiveEditCode) &&
+            Objects.equals(loanStatus, saprmm.loanStatus);
     }
 
     @Override
@@ -196,89 +169,50 @@ class SAPRMM {
     }
 
     /**
-     * Represents the "sub-data" of a {@link SAPRMM} instance.
-     * This data is
+     * Represents the parameters that are be passed into a controller
+     * for updating a {@link SAPRMM} instance.
      */
-    @Entity(name = "saprmm_sub_data")
-    static class SubData {
+    static class UpdateParams {
 
-        @Id
-        @Column(name = "saprmm_id")
-        private Long id;
+        @NotNull private final Long id;
+        private final double upbCurrentAmount;
+        @NotNull private final String loanStatus;
+        @NotNull private final Instant maturityDate;
+        private final int poolTerm;
 
-        @OneToOne
-        @MapsId
-        @JoinColumn(name = "saprmm_id")
-        private SAPRMM saprmm;
-
-        private double upb;
-        private String rmm;
-        private String loanStatus;
-        private double upbCurrentAmount;
-        private Instant maturityDate;
-        private double poolTerm;
-
-        public SubData() {}
-
-        public SubData(SAPRMM saprmm, double upb, String rmm, String loanStatus, double upbCurrentAmount, Instant maturityDate, double poolTerm) {
-            this.saprmm = saprmm;
-            this.upb = upb;
-            this.rmm = rmm;
-            this.loanStatus = loanStatus;
+        public UpdateParams(long id, double upbCurrentAmount, String loanStatus, Instant maturityDate, int poolTerm) {
+            this.id = id;
             this.upbCurrentAmount = upbCurrentAmount;
+            this.loanStatus = loanStatus;
             this.maturityDate = maturityDate;
             this.poolTerm = poolTerm;
         }
 
-        public Long getId() {
-            return id;
-        }
+        public long getId() { return id; }
 
-        public SAPRMM getSaprmm() {
-            return saprmm;
-        }
+        public double getUpbCurrentAmount() { return upbCurrentAmount; }
 
-        public double getUpb() {
-            return upb;
-        }
+        public String getLoanStatus() { return loanStatus; }
 
-        public String getRmm() {
-            return rmm;
-        }
+        public Instant getMaturityDate() { return maturityDate; }
 
-        public String getLoanStatus() {
-            return loanStatus;
-        }
-
-        public double getUpbCurrentAmount() {
-            return upbCurrentAmount;
-        }
-
-        public Instant getMaturityDate() {
-            return maturityDate;
-        }
-
-        public double getPoolTerm() {
-            return poolTerm;
-        }
+        public int getPoolTerm() { return poolTerm; }
 
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            SubData subData = (SubData) o;
-            return Double.compare(subData.upb, upb) == 0 &&
-                Double.compare(subData.upbCurrentAmount, upbCurrentAmount) == 0 &&
-                Double.compare(subData.poolTerm, poolTerm) == 0 &&
-                Objects.equals(id, subData.id) &&
-                Objects.equals(rmm, subData.rmm) &&
-                Objects.equals(loanStatus, subData.loanStatus) &&
-                Objects.equals(maturityDate, subData.maturityDate);
+            UpdateParams that = (UpdateParams) o;
+            return id == that.id &&
+                Double.compare(that.upbCurrentAmount, upbCurrentAmount) == 0 &&
+                poolTerm == that.poolTerm &&
+                Objects.equals(loanStatus, that.loanStatus) &&
+                Objects.equals(maturityDate, that.maturityDate);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(id, upb, rmm, loanStatus, upbCurrentAmount, maturityDate, poolTerm);
+            return Objects.hash(id, upbCurrentAmount, loanStatus, maturityDate, poolTerm);
         }
     }
 }

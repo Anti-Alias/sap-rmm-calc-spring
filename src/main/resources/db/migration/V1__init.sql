@@ -17,13 +17,3 @@ CREATE TABLE "saprmm" (
     upb_adjustment_amount_current DOUBLE PRECISION NOT NULL,
     loan_status TEXT NOT NULL
 );
-
-CREATE TABLE "saprmm_sub_data" (
-    saprmm_id INTEGER NOT NULL REFERENCES "saprmm" (id),
-    upb DOUBLE PRECISION NOT NULL,
-    rmm TEXT NOT NULL,
-    loan_status TEXT NOT NULL,
-    upb_current_amount DOUBLE PRECISION NOT NULL,
-    maturity_date TIMESTAMPTZ NOT NULL,
-    pool_term DOUBLE PRECISION NOT NULL
-);

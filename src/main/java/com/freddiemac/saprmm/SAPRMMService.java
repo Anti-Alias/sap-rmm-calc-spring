@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class SAPRMMService {
 
-    private SAPRMMRepository repository;
+    private final SAPRMMRepository repository;
 
     @Autowired
     public SAPRMMService(SAPRMMRepository repository) {
@@ -20,5 +20,16 @@ public class SAPRMMService {
 
     public List<SAPRMM> findAll() {
         return repository.findAll();
+    }
+
+    public void save(SAPRMM saprmm) { repository.save(saprmm); }
+
+    public void update(SAPRMM.UpdateParams updateParams) {
+        long id = updateParams.getId();
+        SAPRMM existingRecord = repository
+            .findById(id)
+            .orElseThrow(() -> new SAPRMMException(String.format("SAPRMM instance with id '%s' not found", id)));
+        existingRecord.update(updateParams);
+        repository.save(existingRecord);
     }
 }
