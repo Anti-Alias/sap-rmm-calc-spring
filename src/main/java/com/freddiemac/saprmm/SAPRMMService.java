@@ -31,4 +31,8 @@ public class SAPRMMService {
         existingRecord.update(updateParams);
         repository.save(existingRecord);
     }
+
+    public void delete(long id) {
+        repository.deleteById(id);
+    }
 }

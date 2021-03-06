@@ -1,6 +1,7 @@
 package com.freddiemac.saprmm;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -42,5 +43,15 @@ public class SAPRMMController {
     @PatchMapping("update/{id}")
     public void update(@PathVariable("id") long id, @RequestBody SAPRMM.UpdateParams params) {
         service.update(id, params);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public void delete(@PathVariable("id") long id) {
+        try {
+            service.delete(id);
+        }
+        catch(EmptyResultDataAccessException e) {
+            throw new SAPRMMException(String.format("SAPRMM object with id '%d' not found", id));
+        }
     }
 }
