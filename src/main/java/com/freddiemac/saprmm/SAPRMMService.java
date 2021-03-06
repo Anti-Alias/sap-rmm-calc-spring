@@ -24,8 +24,7 @@ public class SAPRMMService {
 
     public void save(SAPRMM saprmm) { repository.save(saprmm); }
 
-    public void update(SAPRMM.UpdateParams updateParams) {
-        long id = updateParams.getId();
+    public void update(long id, SAPRMM.UpdateParams updateParams) {
         SAPRMM existingRecord = repository
             .findById(id)
             .orElseThrow(() -> new SAPRMMException(String.format("SAPRMM instance with id '%s' not found", id)));

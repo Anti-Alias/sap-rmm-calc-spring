@@ -174,21 +174,17 @@ class SAPRMM {
      */
     static class UpdateParams {
 
-        @NotNull private final Long id;
         private final double upbCurrentAmount;
         @NotNull private final String loanStatus;
         @NotNull private final Instant maturityDate;
         private final int poolTerm;
 
-        public UpdateParams(long id, double upbCurrentAmount, String loanStatus, Instant maturityDate, int poolTerm) {
-            this.id = id;
+        public UpdateParams(double upbCurrentAmount, String loanStatus, Instant maturityDate, int poolTerm) {
             this.upbCurrentAmount = upbCurrentAmount;
             this.loanStatus = loanStatus;
             this.maturityDate = maturityDate;
             this.poolTerm = poolTerm;
         }
-
-        public long getId() { return id; }
 
         public double getUpbCurrentAmount() { return upbCurrentAmount; }
 
@@ -203,8 +199,7 @@ class SAPRMM {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             UpdateParams that = (UpdateParams) o;
-            return id == that.id &&
-                Double.compare(that.upbCurrentAmount, upbCurrentAmount) == 0 &&
+            return Double.compare(that.upbCurrentAmount, upbCurrentAmount) == 0 &&
                 poolTerm == that.poolTerm &&
                 Objects.equals(loanStatus, that.loanStatus) &&
                 Objects.equals(maturityDate, that.maturityDate);
@@ -212,7 +207,7 @@ class SAPRMM {
 
         @Override
         public int hashCode() {
-            return Objects.hash(id, upbCurrentAmount, loanStatus, maturityDate, poolTerm);
+            return Objects.hash(upbCurrentAmount, loanStatus, maturityDate, poolTerm);
         }
     }
 }
