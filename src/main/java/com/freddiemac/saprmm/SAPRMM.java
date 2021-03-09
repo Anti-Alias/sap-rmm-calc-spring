@@ -113,10 +113,12 @@ class SAPRMM {
      * @param params Parameters to update.
      */
     public void update(UpdateParams params) {
+        upbAdjustmentAmountCurrent = params.getUpb();
         upbCurrentAmount = params.getUpbCurrentAmount();
         loanStatus = params.getLoanStatus();
         maturityDate = params.getMaturityDate();
         poolTerm = params.getPoolTerm();
+        poolPercent = params.getPoolPercent();
     }
 
     @Override
@@ -172,17 +174,23 @@ class SAPRMM {
      */
     static class UpdateParams {
 
-        private final double upbCurrentAmount;
+        private final double upb;
         @NotNull private final String loanStatus;
+        private final double upbCurrentAmount;
         @NotNull private final Instant maturityDate;
         private final int poolTerm;
+        private final int poolPercent;
 
-        public UpdateParams(double upbCurrentAmount, String loanStatus, Instant maturityDate, int poolTerm) {
+        public UpdateParams(double upb, String loanStatus, double upbCurrentAmount, Instant maturityDate, int poolTerm, int poolPercent) {
+            this.upb = upb;
             this.upbCurrentAmount = upbCurrentAmount;
             this.loanStatus = loanStatus;
             this.maturityDate = maturityDate;
             this.poolTerm = poolTerm;
+            this.poolPercent = poolPercent;
         }
+
+        public double getUpb() { return upb; }
 
         public double getUpbCurrentAmount() { return upbCurrentAmount; }
 
@@ -192,20 +200,24 @@ class SAPRMM {
 
         public int getPoolTerm() { return poolTerm; }
 
+        public int getPoolPercent() { return poolPercent; }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             UpdateParams that = (UpdateParams) o;
-            return Double.compare(that.upbCurrentAmount, upbCurrentAmount) == 0 &&
+            return Double.compare(that.upb, upb) == 0 &&
+                Double.compare(that.upbCurrentAmount, upbCurrentAmount) == 0 &&
                 poolTerm == that.poolTerm &&
+                poolPercent == that.poolPercent &&
                 Objects.equals(loanStatus, that.loanStatus) &&
                 Objects.equals(maturityDate, that.maturityDate);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(upbCurrentAmount, loanStatus, maturityDate, poolTerm);
+            return Objects.hash(upb, loanStatus, upbCurrentAmount, maturityDate, poolTerm, poolPercent);
         }
     }
 }
