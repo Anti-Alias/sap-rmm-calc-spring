@@ -13,11 +13,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class SAPRMMExceptionHandler extends ResponseEntityExceptionHandler {
 
-    private static Logger logger = LoggerFactory.getLogger(SAPRMMExceptionHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(SAPRMMExceptionHandler.class);
 
     @ExceptionHandler(value = { SAPRMMException.class })
     protected ResponseEntity<Object> handleConflict(SAPRMMException ex, WebRequest request) {
-        logger.error(ex.getMessage(), ex);
+        log.error(ex.getMessage(), ex);
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 }

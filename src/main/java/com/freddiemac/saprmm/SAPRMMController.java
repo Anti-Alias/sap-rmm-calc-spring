@@ -33,15 +33,23 @@ public class SAPRMMController {
     @PostMapping("create")
     public void create(@RequestBody SAPRMM saprmm) {
         try {
-            service.save(saprmm);
+            service.create(saprmm);
         }
         catch(ConstraintViolationException e) {
             throw new SAPRMMException("Format of SAPRMM object was invalid", e);
         }
     }
 
+    @GetMapping("read/{id}")
+    public SAPRMM read(@PathVariable("id") long id) {
+        return service.read(id);
+    }
+
     @PatchMapping("update/{id}")
-    public void update(@PathVariable("id") long id, @RequestBody SAPRMM.UpdateParams params) {
+    public void update(
+        @PathVariable("id") long id,
+        @RequestBody SAPRMM.UpdateParams params
+    ) {
         service.update(id, params);
     }
 

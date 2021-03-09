@@ -22,7 +22,13 @@ public class SAPRMMService {
         return repository.findAll();
     }
 
-    public void save(SAPRMM saprmm) { repository.save(saprmm); }
+    public void create(SAPRMM saprmm) { repository.save(saprmm); }
+
+    public SAPRMM read(long id) {
+        return repository
+            .findById(id)
+            .orElseThrow(()-> new SAPRMMException(String.format("SAPRMM instance with id '%s' not found", id)));
+    }
 
     public void update(long id, SAPRMM.UpdateParams updateParams) {
         SAPRMM existingRecord = repository

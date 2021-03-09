@@ -1,7 +1,5 @@
 package com.freddiemac.saprmm;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.time.Instant;
 import java.util.Objects;
 
@@ -33,7 +31,7 @@ class SAPRMM {
     private Instant maturityDate;
     private Instant noteMaturityDate;
     private String principalAmortizationCode;
-    private String ddlpi;
+    private Instant ddlpi;
     private String activeInactiveEditCode;
     private double upbAdjustmentAmountCurrent;
     private String loanStatus;
@@ -53,7 +51,7 @@ class SAPRMM {
         Instant maturityDate,
         Instant noteMaturityDate,
         String principalAmortizationCode,
-        String ddlpi,
+        Instant ddlpi,
         String activeInactiveEditCode,
         double upbAdjustmentAmountCurrent,
         String loanStatus
@@ -102,7 +100,7 @@ class SAPRMM {
 
     public String getPrincipalAmortizationCode() { return principalAmortizationCode; }
 
-    public String getDdlpi() { return ddlpi; }
+    public Instant getDdlpi() { return ddlpi; }
 
     public String getActiveInactiveEditCode() { return activeInactiveEditCode; }
 

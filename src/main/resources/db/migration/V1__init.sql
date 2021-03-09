@@ -12,7 +12,7 @@ CREATE TABLE "saprmm" (
     maturity_date TIMESTAMPTZ NOT NULL,
     note_maturity_date TIMESTAMPTZ NOT NULL,
     principal_amortization_code TEXT NOT NULL,
-    ddlpi TEXT NOT NULL,
+    ddlpi TIMESTAMPTZ NOT NULL,
     active_inactive_edit_code TEXT NOT NULL,
     upb_adjustment_amount_current DOUBLE PRECISION NOT NULL,
     loan_status TEXT NOT NULL
